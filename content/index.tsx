@@ -47,7 +47,7 @@ import { ul } from "./ul";
 import { video } from "./video";
 import { view } from "./view";
 
-export function load () : void {
+export function load(): void {
   ProductContentRenderer.register(ContentType.A, a);
   ProductContentRenderer.register(ContentType.ARTICLE, article);
   ProductContentRenderer.register(ContentType.AUDIO, audio);
@@ -56,7 +56,10 @@ export function load () : void {
   ProductContentRenderer.register(ContentType.BR, br);
   ProductContentRenderer.register(ContentType.CODE, code);
   ProductContentRenderer.register(ContentType.COMPONENT, component);
-  ProductContentRenderer.register(ContentType.COMPONENT_CHILDREN, componentChildren);
+  ProductContentRenderer.register(
+    ContentType.COMPONENT_CHILDREN,
+    componentChildren,
+  );
   ProductContentRenderer.register(ContentType.DEL, del);
   ProductContentRenderer.register(ContentType.DIV, div);
   ProductContentRenderer.register(ContentType.EM, em);

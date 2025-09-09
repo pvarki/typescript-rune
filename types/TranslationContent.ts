@@ -1,15 +1,16 @@
 import { isRegularObject } from "../helpers/isRegularObject";
+import { ContentType } from "./ContentType";
 import {
-    ContentType,
-} from "./ContentType";
-import { TranslationCollection, isTranslationCollection } from "./TranslationCollection";
+  TranslationCollection,
+  isTranslationCollection,
+} from "./TranslationCollection";
 
 /**
  * Translation content for i18n
  */
 export interface TranslationContent {
-    readonly type : ContentType.I18N;
-    readonly data : TranslationCollection;
+  readonly type: ContentType.I18N;
+  readonly data: TranslationCollection;
 }
 
 /**
@@ -17,10 +18,12 @@ export interface TranslationContent {
  *
  * @param value
  */
-export function isTranslationContent ( value: unknown) : value is TranslationContent {
-    return (
-        isRegularObject(value)
-        && value?.type === ContentType.I18N
-        && isTranslationCollection(value?.data)
-    );
+export function isTranslationContent(
+  value: unknown,
+): value is TranslationContent {
+  return (
+    isRegularObject(value) &&
+    value?.type === ContentType.I18N &&
+    isTranslationCollection(value?.data)
+  );
 }

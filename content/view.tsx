@@ -4,6 +4,8 @@ import { BaseParentContent } from "../types/BaseParentContent";
 import { CompiledRenderer } from "../types/CompiledRenderer";
 import { RendererCompiler } from "../types/RendererCompiler";
 
-export const view : RendererCompiler<BaseContent> = (content: BaseParentContent) : CompiledRenderer => {
-  return ProductContentRenderer.compile( content.body )
-}
+export const view: RendererCompiler<BaseContent> = (
+  content: BaseParentContent,
+): CompiledRenderer => {
+  return ProductContentRenderer.compile(content.body);
+};

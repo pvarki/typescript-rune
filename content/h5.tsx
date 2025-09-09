@@ -5,8 +5,14 @@ import { BaseParentContent } from "../types/BaseParentContent";
 import { CompiledRenderer } from "../types/CompiledRenderer";
 import { RendererCompiler } from "../types/RendererCompiler";
 
-export const h5 : RendererCompiler<BaseContent> = (content: BaseParentContent) : CompiledRenderer => {
-  const prepareClassNameFn = ProductContentRenderer.prepareClassName(content.classes);
+export const h5: RendererCompiler<BaseContent> = (
+  content: BaseParentContent,
+): CompiledRenderer => {
+  const prepareClassNameFn = ProductContentRenderer.prepareClassName(
+    content.classes,
+  );
   const bodyFn = ProductContentRenderer.compile(content?.body);
-  return (context : RendererContext) => <h5 className={prepareClassNameFn(context)}>{bodyFn(context)}</h5>
-}
+  return (context: RendererContext) => (
+    <h5 className={prepareClassNameFn(context)}>{bodyFn(context)}</h5>
+  );
+};

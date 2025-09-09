@@ -1,7 +1,4 @@
-import {
-    RootContent,
-    isRootContent,
-} from "./RootContent";
+import { RootContent, isRootContent } from "./RootContent";
 import { Content } from "./Content";
 import { ContentType } from "./ContentType";
 
@@ -9,10 +6,10 @@ import { ContentType } from "./ContentType";
  * Component content type.
  */
 export interface ComponentContent extends RootContent {
-    readonly type     : ContentType.COMPONENT;
-    readonly classes ?: readonly string[];
-    readonly name     : string;
-    readonly body    ?: string | Content | readonly Content[];
+  readonly type: ContentType.COMPONENT;
+  readonly classes?: readonly string[];
+  readonly name: string;
+  readonly body?: string | Content | readonly Content[];
 }
 
 /**
@@ -20,9 +17,6 @@ export interface ComponentContent extends RootContent {
  *
  * @param value
  */
-export function isComponentContent (value: unknown) : value is ComponentContent {
-    return (
-        isRootContent(value)
-        && value?.type === ContentType.COMPONENT
-    );
+export function isComponentContent(value: unknown): value is ComponentContent {
+  return isRootContent(value) && value?.type === ContentType.COMPONENT;
 }

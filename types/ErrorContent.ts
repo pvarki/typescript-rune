@@ -1,16 +1,13 @@
-import {
-  BaseParentContent,
-  isBaseParentContent,
-} from "./BaseParentContent";
+import { BaseParentContent, isBaseParentContent } from "./BaseParentContent";
 import { ContentType } from "./ContentType";
 
 /**
  * Defines layout content type
  */
 export interface ErrorContent extends BaseParentContent {
-  readonly type  : ContentType.ERROR_VIEW | string;
-  readonly title ?: string;
-  readonly message ?: string;
+  readonly type: ContentType.ERROR_VIEW | string;
+  readonly title?: string;
+  readonly message?: string;
 }
 
 /**
@@ -18,9 +15,6 @@ export interface ErrorContent extends BaseParentContent {
  *
  * @param value
  */
-export function isErrorContent ( value: unknown) : value is ErrorContent {
-  return (
-    isBaseParentContent(value)
-    && value.type === ContentType.ERROR_VIEW
-  );
+export function isErrorContent(value: unknown): value is ErrorContent {
+  return isBaseParentContent(value) && value.type === ContentType.ERROR_VIEW;
 }

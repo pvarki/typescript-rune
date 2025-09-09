@@ -1,4 +1,3 @@
-
 export interface ContentActions {
-    [action: string]: () => void
+  [action: string]: () => void;
 }

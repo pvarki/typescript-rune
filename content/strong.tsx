@@ -5,8 +5,14 @@ import { BaseParentContent } from "../types/BaseParentContent";
 import { CompiledRenderer } from "../types/CompiledRenderer";
 import { RendererCompiler } from "../types/RendererCompiler";
 
-export const strong : RendererCompiler<BaseContent> = (content: BaseParentContent) : CompiledRenderer => {
-  const prepareClassNameFn = ProductContentRenderer.prepareClassName(content.classes);
+export const strong: RendererCompiler<BaseContent> = (
+  content: BaseParentContent,
+): CompiledRenderer => {
+  const prepareClassNameFn = ProductContentRenderer.prepareClassName(
+    content.classes,
+  );
   const bodyFn = ProductContentRenderer.compile(content?.body);
-  return (context : RendererContext) => <strong className={prepareClassNameFn(context)}>{bodyFn(context)}</strong>
-}
+  return (context: RendererContext) => (
+    <strong className={prepareClassNameFn(context)}>{bodyFn(context)}</strong>
+  );
+};
