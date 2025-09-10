@@ -47,7 +47,7 @@ import { ul } from "./ul";
 import { video } from "./video";
 import { view } from "./view";
 
-export function load(): void {
+export function loadDefaultRuneContent(): void {
   ProductContentRenderer.register(ContentType.A, a);
   ProductContentRenderer.register(ContentType.ARTICLE, article);
   ProductContentRenderer.register(ContentType.AUDIO, audio);
