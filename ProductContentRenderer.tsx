@@ -21,6 +21,7 @@ import { createTranslateContent } from "./types/TranslateContent";
  * Renders dynamic product specific content from product integration API.
  */
 export class ProductContentRenderer {
+
   private static _cache: ContentRenderingCache = {};
 
   public static ComponentParamPrefix = "Component.Param.";

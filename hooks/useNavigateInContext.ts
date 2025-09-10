@@ -25,6 +25,7 @@ export function useNavigateInContext(
   // Listen for navigation events from the renderer context
   useEffect(() => {
     if (!context) return;
+    console.log('Setting up NAVIGATE listener in context');
     return context.addEventListener(
       RendererEvent.NAVIGATE,
       navigateEventCallback,

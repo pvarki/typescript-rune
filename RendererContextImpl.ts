@@ -4,10 +4,16 @@ import { ContentActions } from "./types/ContentActions";
 
 import {
   ObservableDestructor,
+  ObservableImpl,
   ObservableListener,
   ObservableService,
 } from "./services/ObservableService";
 import { RuntimeContentService } from "./services/RuntimeContentService";
+
+export enum RendererEvent {
+  NAVIGATE = "navigate",
+  OPEN = "open",
+}
 
 export interface RendererContext extends ObservableService<RendererEvent> {
   readonly contentService: RuntimeContentService;
@@ -30,18 +36,12 @@ export interface RendererContext extends ObservableService<RendererEvent> {
   open(target: BaseContent): void;
 }
 
-export enum RendererEvent {
-  NAVIGATE = "navigate",
-  OPEN = "open",
-}
-
 /**
  * Provides context data to content renderers.
  */
 export class RendererContextImpl implements RendererContext {
-  private readonly _listeners: {
-    [K in RendererEvent]?: ObservableListener<RendererEvent>[];
-  } = {};
+
+  private readonly _observable : ObservableImpl<RendererEvent>;
 
   public readonly contentService: RuntimeContentService;
   public readonly contentActions: ContentActions;
@@ -49,11 +49,13 @@ export class RendererContextImpl implements RendererContext {
   public readonly stateContent: BaseContent | undefined;
 
   protected constructor(
+    observable : ObservableImpl<RendererEvent>,
     contentService: RuntimeContentService,
     contentActions?: ContentActions,
     componentContent?: ComponentContent,
     stateContent?: BaseContent,
   ) {
+    this._observable = observable;
     this.contentService = contentService;
     this.contentActions = contentActions ?? {};
     this.componentContent = componentContent ?? undefined;
@@ -67,6 +69,7 @@ export class RendererContextImpl implements RendererContext {
     stateContent?: BaseContent,
   ): RendererContextImpl {
     return new RendererContextImpl(
+      new ObservableImpl<RendererEvent>(),
       contentService,
       contentActions,
       componentContent,
@@ -85,6 +88,7 @@ export class RendererContextImpl implements RendererContext {
     stateContent: BaseContent,
   ): RendererContext {
     return new RendererContextImpl(
+      this._observable,
       this.contentService,
       this.contentActions,
       componentContent,
@@ -98,6 +102,7 @@ export class RendererContextImpl implements RendererContext {
    */
   public createContextWithoutParent(): RendererContext {
     return new RendererContextImpl(
+      this._observable,
       this.contentService,
       this.contentActions,
       undefined,
@@ -109,35 +114,14 @@ export class RendererContextImpl implements RendererContext {
     event: RendererEvent,
     listener: ObservableListener<RendererEvent>,
   ): ObservableDestructor {
-    this._listeners[event] = this._listeners[event] ?? [];
-    this._listeners[event]!.push(listener);
-    return () => {
-      this._listeners[event] = this._listeners[event]?.filter(
-        (l) => l !== listener,
-      );
-    };
-  }
-
-  public _dispatchEvent(event: RendererEvent, ...args: unknown[]): void {
-    const listeners = this._listeners[event];
-    if (!listeners || listeners?.length === 0) {
-      console.warn(`Warning! No listeners for event: ${event}`);
-      return;
-    }
-    listeners.forEach((listener) => {
-      try {
-        listener(event, ...args);
-      } catch (err) {
-        console.error(`Error in event listener for event ${event}:`, err);
-      }
-    });
+    return this._observable.addEventListener(event, listener);
   }
 
   public navigate(to: string): void {
-    this._dispatchEvent(RendererEvent.NAVIGATE, to);
+    this._observable.dispatchEvent(RendererEvent.NAVIGATE, to);
   }
 
   public open(target: BaseContent): void {
-    this._dispatchEvent(RendererEvent.OPEN, target);
+    this._observable.dispatchEvent(RendererEvent.OPEN, target);
   }
 }
